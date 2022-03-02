@@ -3,7 +3,7 @@ let isStarted = false;
 let level = 0;
 let buttonColours = ["red", "blue", "green", "yellow"];
 let userClickedPattern = [];
-
+let highestScore = [];
 
 $(document).keypress( function(){
    if(!isStarted){
@@ -33,6 +33,15 @@ function nextSequence() {
     playSound(randomChosenColour);
 };
 
+function checkHighestScore(scoreArr){
+    scoreArr.reduce( (acc, max) => {
+        if(acc >= max){
+            max = acc;
+        };
+        return max;
+    }, 0);
+}
+
 function checkAnswer(currentLevel){
     console.log("Game Pattern: " + gamePattern);
     console.log("User Clicked Pattern: " + userClickedPattern);
@@ -48,7 +57,10 @@ function checkAnswer(currentLevel){
             $("body").removeClass("game-over");
         },200);
         playSound("wrong");
-        $("#level-title").text("Game Over, Press Any Key to Restart");
+        highestScore.push(level);
+        highest_score = checkHighestScore(highestScore);
+        latestScore = level;
+        $("#level-title").text("Game Over, Press Any Key to Restart" + <br/> + "Highest Score: "+ highest_score + <br/> + "Latest Score: " + latestScore);
         startOver();
     }
 }
