@@ -7,6 +7,7 @@ let highestScore = [];
 
 $(document).keypress( function(){
    if(!isStarted){
+       $("#score").addClass("hidden");
        $("#level-title").text("Level "+ level);
        nextSequence();
        isStarted = true;
@@ -34,12 +35,13 @@ function nextSequence() {
 };
 
 function checkHighestScore(scoreArr){
-    scoreArr.reduce( (acc, max) => {
+   let result = scoreArr.reduce( (acc, max) => {
         if(acc >= max){
             max = acc;
         };
         return max;
     }, 0);
+    return result;
 }
 
 function checkAnswer(currentLevel){
@@ -60,7 +62,9 @@ function checkAnswer(currentLevel){
         highestScore.push(level);
         highest_score = checkHighestScore(highestScore);
         latestScore = level;
-        $("#level-title").text("Game Over, Press Any Key to Restart" + <br/> + "Highest Score: "+ highest_score + <br/> + "Latest Score: " + latestScore);
+        $("#level-title").text("Game Over, Press Any Key to Restart");
+        $("#score").removeClass("hidden");
+        $("#score").text( "Highest Score: "+ highest_score + " " + "Latest Score: " + latestScore);
         startOver();
     }
 }
